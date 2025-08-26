@@ -28,7 +28,7 @@ const InterviewSimulation = ({ interviewId, onComplete }: { interviewId?: string
   const [micEnabled, setMicEnabled] = useState(true);
   const [interviewStarted, setInterviewStarted] = useState(false);
 
-  const [fetchedQuestions, setFetchedQuestions] = useState<any[] | null>(null);
+  const [fetchedQuestions, setFetchedQuestions] = useState<{ question: string }[] | null>(null);
 
   const questions = fetchedQuestions ?? {
     HR: [
@@ -61,7 +61,7 @@ const InterviewSimulation = ({ interviewId, onComplete }: { interviewId?: string
         const api = (await import('@/services/api')).interviewAPI;
         const resp = await api.getQuestions(interviewId);
         const qs = resp?.data?.data?.questions || resp?.data?.questions;
-        if (qs) setFetchedQuestions(qs.map((q: any) => ({ question: q.question || q.text })));
+        if (qs) setFetchedQuestions(qs.map((q: { question?: string; text?: string }) => ({ question: q.question || q.text || '' })));
       } catch (err) {
         console.error('Failed to load interview questions', err);
       }

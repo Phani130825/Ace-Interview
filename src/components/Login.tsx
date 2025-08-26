@@ -25,8 +25,9 @@ const Login = ({ onSwitchToRegister }: LoginProps) => {
 
     try {
       await login(email, password);
-    } catch (error: any) {
-      setError(error.response?.data?.error || "Login failed. Please try again.");
+    } catch (error: unknown) {
+      const errorMessage = (error as { response?: { data?: { error?: string } } })?.response?.data?.error || "Login failed. Please try again.";
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }

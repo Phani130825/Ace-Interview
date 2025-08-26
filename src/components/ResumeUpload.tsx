@@ -48,7 +48,7 @@ const ResumeUpload = ({ onUploaded, onStartInterview }: ResumeUploadProps) => {
         setUploadedResumeId(resumeId);
         if (onUploaded) onUploaded(resumeId);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Upload failed:', error);
       setUploadStatus('error');
       setAnalysisProgress(0);

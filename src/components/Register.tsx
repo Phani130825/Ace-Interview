@@ -58,8 +58,9 @@ const Register = ({ onSwitchToLogin }: RegisterProps) => {
         }
         
         await register(firstName.trim(), lastName.trim(), email.trim(), password);
-      } catch (error: any) {
-      setError(error.response?.data?.error || "Registration failed. Please try again.");
+      } catch (error: unknown) {
+        const errorMessage = (error as { response?: { data?: { error?: string } } })?.response?.data?.error || "Registration failed. Please try again.";
+        setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
